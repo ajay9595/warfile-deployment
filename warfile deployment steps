@@ -1,0 +1,56 @@
+step :1 Give the command as metioned below to generate the war file:--------------------------------------------------
+
+Mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeVersion=1.4
+
+step 2: Provide the articatid and group id:---------------------------------------------------------------------------
+
+step 3:deploy the warfile from the maven:-----------------------------------------------------------------------------
+ 
+------> go to conf/setting.xml
+       
+-------->add the following code :
+
+<server>
+    <id>TomcatServer</id>
+    <username>admin</username>
+    <password>password</password>
+</server>
+
+
+
+step 4: provide the below plug-in inside the P.O.M file---------------------------------------------------------------
+
+<plugin>
+    <groupId>org.apache.tomcat.maven</groupId>
+    <artifactId>tomcat7-maven-plugin</artifactId>
+    <version>2.2</version>
+    <configuration>
+        <url>http://localhost:8080/manager/text</url>
+        <server>TomcatServer</server>
+        <path>/myapp</path>
+    </configuration>
+</plugin>
+
+step 5: download apache-tomcat 7 from the apache.org--------------------------------------------------------------------
+        wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz
+
+step 6: untar the compressed file---------------------------------------------------------------------------------------
+         
+           tar -xf apache-tomcat
+
+step 7: go inside the conf ---------------------------------------------------------------------------------------------
+        cd \conf\tomcat-users
+
+step 8: add the below roles --------------------------------------------------------------------------------------------
+
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<user username="admin" password="admin" roles="manager-gui, manager-script"/>
+
+step 9: provide the below command: inthe maven terminal or commandprompt-------------------------------------------------
+
+        mvn tomcat7:deploy
+
+step 10: open the tomcat and see the manager tab -------------------------------------------------------------------------
+
+war file will be automatically deployed 
